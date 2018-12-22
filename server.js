@@ -14,6 +14,9 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(express.static(__dirname + '/public'))
 
+
+
+
 //GET ALL SONGS IN DATABASE
 app.get('/api/song', (req, res, nextFn) => {
     query.getAllSongs()
@@ -64,7 +67,7 @@ app.get('/api/album/:album', (req,res,nextFn) =>{
 
 //GETS ALL ARTIST IN DATABASE
 app.get('/api/artist', (req, res, nextFn)=>{
-    query.getAllAlbums()
+    query.getAllArtist()
         .then((itm)=>{
             res.send(itm)
         })
@@ -73,6 +76,18 @@ app.get('/api/artist', (req, res, nextFn)=>{
         })
 })
 
+// GETS A SPECIFIC ARTIST
+app.get('/api/artist/:artist',(req, res, nextFn)=>{
+    let artist = req.params.artist
+    artist = artist.toLowerCase()
+    query.getArtist(artist)
+        .then((itm)=>{
+            res.send(itm)
+        })
+        .catch((er)=>{
+            console.log(er)
+        })
+})
 
 
 app.listen(3000, () => {
